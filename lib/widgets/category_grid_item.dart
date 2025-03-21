@@ -28,8 +28,8 @@ class CategoryGridItem extends StatelessWidget {
               category.color.withOpacity(0.55),
               category.color.withOpacity(0.9),
             ],
-            begin: Alignment.topCenter,
-            end: Alignment.topLeft,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
         child: Text(

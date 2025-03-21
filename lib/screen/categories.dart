@@ -4,16 +4,24 @@ import 'package:meals_app/screen/meals.dart';
 import 'package:meals_app/widgets/category_grid_item.dart';
 import 'package:meals_app/models/category.dart';
 
+import '../models/meal.dart';
+
 // quản lý các màn hình và sự kiện chính
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key});
+   CategoriesScreen({
+    super.key,
+    required this.onToggleFavorite,
+    required this.availableMeals,
+  });
+  final void Function(Meal meal) onToggleFavorite;
+  List<Meal> availableMeals;
 
   @override
   Widget build(BuildContext context) {
     // select Category on screen
     void _selectCategory(BuildContext context, Category category) {
-      final fillteredMeals = dummyMeals
+      final fillteredMeals = availableMeals
           .where((meal) => meal.categories.contains(category.id))
           .toList();
 
@@ -22,33 +30,29 @@ class CategoriesScreen extends StatelessWidget {
           builder: (ctx) => MealsScreen(
             title: category.title,
             meals: fillteredMeals,
+            onToggleFavorite: onToggleFavorite,
           ),
         ),
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pick your category'),
-      ),
-      body: GridView(
-        padding: const EdgeInsets.all(24),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        children: [
-          // Show list categories in dummy_data
-          for (final category in availableCategories)
-            CategoryGridItem(
-              category: category,
-              onSelectCategory: () {
-                _selectCategory(context, category);
-              },
-            )
-        ],
-      ),
+    return GridView(
+      padding: const EdgeInsets.all(24),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 3 / 2,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20),
+      children: [
+        // Show list categories in dummy_data
+        for (final category in availableCategories)
+          CategoryGridItem(
+            category: category,
+            onSelectCategory: () {
+              _selectCategory(context, category);
+            },
+          )
+      ],
     );
   }
 }

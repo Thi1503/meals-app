@@ -6,19 +6,23 @@ import 'package:meals_app/widgets/meal_item.dart';
 // Show chi tiết các món ăn dựa theo category
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({
-    super.key,
-    required this.title,
-    required this.meals,
-  });
+  const MealsScreen(
+      {super.key,
+      this.title,
+      required this.meals,
+      required this.onToggleFavorite});
 
-  final String title; // nhận vào tiêu đề
+  final String? title; // nhận vào tiêu đề
   final List<Meal> meals; // nhận vào danh sách các bữa ăn
+  final void Function(Meal meal) onToggleFavorite;
 
   void selectMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => MealDetails(meal: meal),
+        builder: (ctx) => MealDetails(
+          meal: meal,
+          onToggleFavorite: onToggleFavorite,
+        ),
       ),
     );
   }
@@ -57,7 +61,7 @@ class MealsScreen extends StatelessWidget {
           itemCount: meals.length,
           itemBuilder: (ctx, index) => MealItem(
             meal: meals[index],
-            onSelectMeal: (context, meal){
+            onSelectMeal: (context, meal) {
               selectMeal(context, meal);
             },
           ),
@@ -65,9 +69,13 @@ class MealsScreen extends StatelessWidget {
       );
     }
 
+    if (title == null) {
+      return content;
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title!),
       ),
       body: content,
     );
