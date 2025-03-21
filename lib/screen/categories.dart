@@ -9,12 +9,10 @@ import '../models/meal.dart';
 // quản lý các màn hình và sự kiện chính
 
 class CategoriesScreen extends StatelessWidget {
-   CategoriesScreen({
+  CategoriesScreen({
     super.key,
-    required this.onToggleFavorite,
     required this.availableMeals,
   });
-  final void Function(Meal meal) onToggleFavorite;
   List<Meal> availableMeals;
 
   @override
@@ -30,7 +28,6 @@ class CategoriesScreen extends StatelessWidget {
           builder: (ctx) => MealsScreen(
             title: category.title,
             meals: fillteredMeals,
-            onToggleFavorite: onToggleFavorite,
           ),
         ),
       );
