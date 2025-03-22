@@ -3,7 +3,9 @@
 =======
 # meals_app
 
-A new Flutter project.
+Một ứng dụng đơn giản ứng dụng việc quản lý trạng thái bằng provider, tương tác giữa các màn hình, sử dụng một số animation đơn giản
+
+
 
 ## Getting Started
 
